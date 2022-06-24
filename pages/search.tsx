@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { SearchResultData } from "../typings";
 import { NextPage } from "next";
 import InfoCard from "../components/InfoCard";
+import Map from "../components/Map";
 type Props = { searchResult: SearchResultData[] };
 
 const Search: NextPage<Props> = ({ searchResult }) => {
@@ -39,6 +40,9 @@ const Search: NextPage<Props> = ({ searchResult }) => {
           {searchResult.map((data: SearchResultData) => (
             <InfoCard key={data.title} data={data} />
           ))}
+        </section>
+        <section className="hiddden xl:inline-flex xl:min-w-[600px]">
+          <Map searchResult={searchResult} />
         </section>
       </main>
       <Footer />

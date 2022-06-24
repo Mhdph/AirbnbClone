@@ -55,11 +55,11 @@ const Home = ({ exploreData, cardsData }: props) => {
 export default Home;
 
 export const getStaticProps = async () => {
-  const exploreData = await fetch("https://links.papareact.com/pyp").then(
-    (res) => res.json()
+  const exploreData = await fetch("https://jsonkeeper.com/b/4G1G").then((res) =>
+    res.json()
   );
 
-  const cardsData = await fetch("https://links.papareact.com/zp1").then((res) =>
+  const cardsData = await fetch("https://jsonkeeper.com/b/VHHT").then((res) =>
     res.json()
   );
 
