@@ -23,7 +23,7 @@ const Map: React.FC<MapProps> = ({ searchResult }) => {
   const [selectedLocation, setSelectedLocation] = useState<LocationData>();
   return (
     <MapGl
-      {...viewPort}
+      {...viewState}
       mapboxAccessToken={process.env.mapboxkey}
       mapStyle="mapbox://styles/mdhph/cl4qoat3r001214p9qnoo0vl4"
       onMove={(evt) => setViewState(evt.viewState)}
