@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Map as MapGl, Marker, Popup } from "react-map-gl";
 import { getCenter } from "geolib";
 import { LocationData, SearchResultData, ViewportData } from "../typings";
-type MapProps = {
+import { FC, useState } from "react";
+import ReactMapGL, { Marker, Popup } from "react-map-gl";
+interface Props {
   searchResult: SearchResultData[];
-};
+}
 
-const Map: React.FC<MapProps> = ({ searchResult }) => {
+const Map: FC<Props> = ({ searchResult }) => {
   const coordinates = searchResult.map((result) => ({
     longitude: result.long,
     latitude: result.lat,
@@ -14,28 +14,39 @@ const Map: React.FC<MapProps> = ({ searchResult }) => {
 
   const center = getCenter(coordinates);
 
-  const [viewState, setViewState] = React.useState({
+  const initialValue = {
+    width: "100%",
+    height: "100%",
     latitude: (center && center?.latitude) || 0.0,
     longitude: (center && center?.longitude) || 0.0,
     zoom: 14,
-  });
+  };
 
-  const [selectedLocation, setSelectedLocation] = useState<LocationData>();
+  const [viewPort, setViewPort] = useState(initialValue);
+  const [selectedLocation, serSelectedLocation] = useState<LocationData>();
+
   return (
-    <MapGl
-      {...viewState}
-      mapboxAccessToken={process.env.mapboxkey}
+    <ReactMapGL
       mapStyle="mapbox://styles/mdhph/cl4qoat3r001214p9qnoo0vl4"
-      onMove={(evt) => setViewState(evt.viewState)}
+      mapboxApiAccessToken={process.env.mapbox_key}
+      onViewportChange={(nextViewPort: ViewportData) =>
+        setViewPort(nextViewPort)
+      }
+      {...viewPort}
     >
       {searchResult.map(({ lat, long, title }) => (
         <div key={title}>
-          <Marker longitude={long} latitude={lat} offset={[-20, -10]}>
+          <Marker
+            longitude={long}
+            latitude={lat}
+            offsetLeft={-20}
+            offsetTop={-10}
+          >
             <p
               role="img"
               aria-label="push-pin"
               onClick={() =>
-                setSelectedLocation({ longitude: long, latitude: lat })
+                serSelectedLocation({ longitude: long, latitude: lat })
               }
               className="cursor-pointer text-2xl animate-bounce"
             >
@@ -48,7 +59,7 @@ const Map: React.FC<MapProps> = ({ searchResult }) => {
               <Popup
                 longitude={long}
                 latitude={lat}
-                onClose={() => setSelectedLocation(undefined)}
+                onClose={() => serSelectedLocation(undefined)}
                 closeOnClick
               >
                 {title}
@@ -56,7 +67,8 @@ const Map: React.FC<MapProps> = ({ searchResult }) => {
             )}
         </div>
       ))}
-    </MapGl>
+    </ReactMapGL>
   );
 };
+
 export default Map;

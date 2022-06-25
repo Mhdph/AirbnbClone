@@ -52,11 +52,13 @@ const Search: NextPage<Props> = ({ searchResult }) => {
 export default Search;
 
 export async function getServerSideProps() {
-  const searchResults = await fetch("https://jsonkeeper.com/b/1W6B").then(
+  const searchResult = await fetch("https://jsonkeeper.com/b/1W6B").then(
     (res) => res.json()
   );
 
   return {
-    props: searchResults,
+    props: {
+      searchResult,
+    },
   };
 }
