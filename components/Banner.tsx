@@ -8,11 +8,12 @@ function Banner() {
         src="https://i.ibb.co/zNMqmQ3/57b9f708-bb12-498c-bc33-769f8fc43e63.webp"
         layout="fill"
         objectFit="cover"
+        alt="cover"
       />
       <div className="absolute top-1/2 w-full text-center">
-        <p className="text-sm md:text-lg">Not show where to go? Pefect</p>
-        <button className="text-purple-500 rounded-full font-bold my-3 hover:shadow-xl active:scale-90 transition duration-150 px-10 py-4 shadow-md bg-white">
-          I'm Flexible
+        <p className="text-sm sm:text-lg">Not sure where to go? Perfect.</p>
+        <button type="button" className="button">
+          I&apos;m flexible
         </button>
       </div>
     </div>
